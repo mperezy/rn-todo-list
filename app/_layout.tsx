@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Platform } from 'react-native'
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,8 +30,23 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack
+        initialRouteName='my-first-page'
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
+        <Stack.Screen name="my-first-page" />
+        <Stack.Screen name="my-second-page" options={{
+          headerShown: Platform.OS !== 'android',
+        }} />
+        <Stack.Screen name="my-third-page" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
